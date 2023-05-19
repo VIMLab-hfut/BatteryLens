@@ -252,8 +252,7 @@ export const printView = (selectedData, leftMargin, rightMargin) => {
             })
         }
 
-        //新思路，可以画一次性的一个特征值，在处理后的数据中加入每一个特征值小于其序号特征值的高度和，这样就可以直接在循环中用
-
+        //新思路，可以画一次性的一个特征值，在处理后的数据中加入每一个特征值小于其序号特征值的高度和，这样就可以直接在循环中
         const dataLstLen = dataLst.length
         for(let a = 0; a < dataLstLen; a++) {
             const i = a
@@ -308,6 +307,10 @@ export const printView = (selectedData, leftMargin, rightMargin) => {
             .domain(yChartRange)
             .range(yRange)
 
+        const yScaleFormat = d3.scaleLinear()
+            .domain([0, 150])
+            .range([0,100])
+
         const xAxisGenerator = d3.axisBottom(xScale).tickValues(xTicks);
 
         const grid = g => g
@@ -347,10 +350,13 @@ export const printView = (selectedData, leftMargin, rightMargin) => {
         svg.append('g')
             .attr('transform', `translate(50 0)`)
             .call(yAxisGenerator)
+            .selectAll('text')
+            .text(n => {
+                return yScaleFormat(n) < 100 ? yScaleFormat(n).toFixed(2) + "%" : null
+            })
             .attr('font-size', '8px')
 
         const colW = xScale.bandwidth();
-        const corlorLen = color.length;
 
         const g1 = svg.append('g')
             .attr('transform', 'translate(0 0)')
@@ -504,7 +510,6 @@ export const printView = (selectedData, leftMargin, rightMargin) => {
             .curve(d3.curveStepAfter)
         const lastY = Y[Y.length - 1]
         Y.push(lastY)
-        console.log("Y:",Y)
         g.append('path').attr('stroke', 'black').attr('fill', 'none')
             .attr('d', pathLine(Y)) //由于曲线绘画的特性，所以把曲线输入数组末尾再加上一个相同的数据
         //绘制错误视图，可以容纳五个错误

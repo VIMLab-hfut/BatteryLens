@@ -82,7 +82,6 @@ export const heatView = () => {
 
     const cycleLen = voltArr.length
     const batteryLen = voltArr[0].length
-    console.log("batteryLen:", batteryLen)
     //建立容器对象
     const main = d3.select('#heatView');
     //设置绘图框尺寸

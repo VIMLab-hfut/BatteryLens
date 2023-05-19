@@ -171,7 +171,6 @@ export const singleCycle = (rectData, aveCtb) => {
             .attr('transform', `translate(${width/2} ${height/2})`)
             .attr('d', pathArc(part))
             .on("mousemove", ({clientX, clientY}, rectData) => {
-                console.log("rectData:", rectData)
             tip.style('display', 'block')
                 .style('left', `${clientX + window.scrollX - 1380}px`)
                 .style('top', `${clientY + window.scrollY - 560}px`)
@@ -212,11 +211,11 @@ export const singleCycle = (rectData, aveCtb) => {
             pathArc3 = d3.arc().innerRadius(innerRadInside - 5).outerRadius(innerRadInside);
         }
         svg.append('path')
+            .datum({ave: averageValue[i],val: value1[i]})
             .attr('fill', color2[i])
             .attr('transform', `translate(${width/2} ${height/2})`)
             .attr('d', pathArc3(part3))
             .on("mousemove", ({clientX, clientY}, rectData) => {
-                console.log("rectData:", rectData)
                 tip.style('display', 'block')
                     .style('left', `${clientX + window.scrollX - 1380}px`)
                     .style('top', `${clientY + window.scrollY - 560}px`)

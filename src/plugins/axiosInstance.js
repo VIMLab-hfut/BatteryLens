@@ -47,7 +47,6 @@ export const getAll = () => {
             statusStore.updateConnectionStatus(true)
         })
         .catch((err) => {
-            console.log("err:", err)
             ElMessage({
                 message: 'Loading failure, please check your connection.',
                 type: 'error'

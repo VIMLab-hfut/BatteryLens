@@ -3,11 +3,11 @@ import {
     mileageList,
     speedList,
     tempList,
-    voltList
+    voltList,
+    output7
 } from '@/plugins/axiosInstance'
 
 export const lineView = (selectedCycle, e) => {
-    console.log("selectedCycle:", selectedCycle)
     // slide的input事件会在还没有读取到json的时候触发，判断一下是否已经读完json
     if(!mileageList || !speedList || !tempList || !voltList) return
     const main = d3.select('#rangeLine');

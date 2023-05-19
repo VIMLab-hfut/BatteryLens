@@ -65,7 +65,7 @@
   import {selectedCycleNumStore} from "@/store/selectedCycleNumStore";
   import * as d3 from 'd3'
   import {onMounted} from "vue";
-  import {competition} from '@/plugins/axiosInstance'
+  import {competition, output7} from '@/plugins/axiosInstance'
   import {connectionStatusStore} from "@/store/connectionStatusStore";
   const connectionStore = connectionStatusStore()
 
@@ -114,16 +114,20 @@
     if(!originList) return;
     const selectedList = []
       // 这里直接用的100次时间周期构成的单次循环
-      for(let i = (selectedCycle) * 100; i <= (selectedCycle + 1) * 100; i++){
+      for(let i = (+selectedCycle) * 100; i <= (+selectedCycle + 1) * 100; i++){
+        const curr = +new Date(originList[i].yr_modahrmn)
+        const newTime = new Date(curr - 18 * 30 * 24 * 60 * 60 * 1000)
+        const formatTime = `${newTime.getFullYear()}/${newTime.getMonth() + 1}/${newTime.getDay() + 1} ${newTime.getHours()}:${newTime.getMinutes()}`
+        originList[i].formatTime = formatTime
         selectedList.push(originList[i])
       }
-      vehicleStatus[0].data = selectedList[0].yr_modahrmn
+      vehicleStatus[0].data = selectedList[0].formatTime
       vehicleStatus[2].data = selectedList[0].vehicle_state
       vehicleStatus[3].data = selectedList[0].charging_status
-      startTime.value = selectedList[0].yr_modahrmn
-      endTime.value = selectedList[99].yr_modahrmn
-      selectedStartTime.value = selectedList[e[0]].yr_modahrmn
-      selectedEndTime.value = selectedList[e[1]].yr_modahrmn
+      startTime.value = selectedList[0].formatTime
+      endTime.value = selectedList[99].formatTime
+      selectedStartTime.value = selectedList[e[0]].formatTime
+      selectedEndTime.value = selectedList[e[1]].formatTime
 
   }
 
