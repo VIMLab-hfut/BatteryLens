@@ -6,8 +6,8 @@ import { ElMessage } from 'element-plus'
 import {connectionStatusStore} from "@/store/connectionStatusStore";
 import store from '@/store/index.js'
 
-const url = 'http://localhost:8081'
-// const url = 'http://8.130.111.45:8081/'
+// const url = 'http://localhost:8081'
+const url = 'http://8.130.111.45:8081/'
 
 //使用axios下面的create([config])方法创建axios实例，其中config参数为axios最基本的配置信息。
 const $http = axios.create({
