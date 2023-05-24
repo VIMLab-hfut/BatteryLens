@@ -100,4 +100,5 @@ In this area, basic data of electric vehicles is displayed, such as vehicle name
 
 All the batteries within the selected cycle are arranged in this view. The background color of each probe (battery) title represents the performance status of the batteries near the probe. By default, each information box displays three rows of data: average temperature, highest temperature, and lowest temperature detected by the probe. Users can switch to displaying average voltage, highest voltage, and lowest voltage of the batteries by using the buttons on the right side. 
 
+![image](https://github.com/VIMLab-hfut/BatteryLens/assets/72554304/185430b6-c301-4265-ae28-f7508d032ac0)
 ![image](https://github.com/VIMLab-hfut/BatteryLens/assets/72554304/1ed95294-ffdb-4d17-866b-03110eb2b96c)
