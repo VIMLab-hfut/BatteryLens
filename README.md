@@ -22,7 +22,7 @@ How to investigate the cause of anomalies: ① Examine the specific distribution
 
  
 
-![img](D:\WebStrom Coding\课件\clip_image002.jpg)
+![image](https://github.com/VIMLab-hfut/BatteryLens/assets/72554304/19336365-f0f0-491e-9195-3159a9c446a2)
 
 The system is easy to operate. You only need to enter the URL http://8.130.111.45/ in a browser, and then you can view the relevant battery data as needed. The following is a detailed introduction to the functions of the system.
 
@@ -34,7 +34,7 @@ In the visual analysis interface, we have designed multiple visual analysis view
 
 ## **A.** **Cycles Selected View**
 
-![img](D:\WebStrom Coding\课件\clip_image002-1684944075897-2.jpg)
+![image](https://github.com/VIMLab-hfut/BatteryLens/assets/72554304/3e994ee5-b2b5-4398-8e41-52159e417026)
 
 This view allows you to view the overall trend and distribution of battery data throughout the process and narrow down the scope to analyze specific regions of interest. The outermost layer of the view is the edge layer, divided into two circular regions. Different abnormal information of the battery is displayed in different layers. The outer alarm circular ring represents the abnormal state of the battery's raw data, while the inner alarm circular ring represents the abnormal state of SOH. The main layer within the edge layer is divided into normal and warning regions. The green line represents the predicted SOH state of the battery, displaying the data throughout all cycles. In the main layer, a light blue circular ring is added to indicate the warning region of SOH, and the threshold for warnings can be set by the user. In the innermost part of the entire view, the SOC display layer is filled with pink background, and the yellow line represents the average SOC value of all batteries at the end of the current cycle.
 
@@ -42,7 +42,7 @@ This view allows you to view the overall trend and distribution of battery data 
 
 ## **B.** **Primary Interactive View**
 
-![img](D:\WebStrom Coding\课件\clip_image004.jpg)
+![image](https://github.com/VIMLab-hfut/BatteryLens/assets/72554304/4797f0b2-713d-45ff-b867-9d9e375a6892)
 
 This is the main component of the system, displaying the SOH (State of Health) changes and feature contributions over cycles. This view is divided into two parts, with the alarm layer on top and SOH prediction and feature contribution display below. Both parts share the same horizontal axis, representing the number of battery charge-discharge cycles. When a user is interested in a specific cycle, clicking on a particular area in the view triggers responsive changes in the Single Cycle Information View and other relevant views, allowing users to quickly access information.
 
@@ -50,7 +50,7 @@ This is the main component of the system, displaying the SOH (State of Health) c
 
 ## **C.** **Single Cycle Information View**
 
-![img](D:\WebStrom Coding\课件\clip_image006.jpg)
+![image](https://github.com/VIMLab-hfut/BatteryLens/assets/72554304/aea91d30-07bc-42c3-bccd-6956de7e8c5c)
 
 This view is divided into two main parts: the information is displayed on the top and the views are on the bottom. The information display consists of three columns that primarily present the status of all batteries, charging information, and native warning codes within the current cycle.
 
@@ -60,7 +60,7 @@ The left semicircular ring represents the remaining SOH of the current charge-di
 
 ## **D.** **Muti-Batteries in Single Cycle View**
 
-| ![img](D:\WebStrom Coding\课件\clip_image008.jpg) | ![img](D:\WebStrom Coding\课件\clip_image010.jpg) | ![img](D:\WebStrom Coding\课件\clip_image012.jpg) |
+|![image](https://github.com/VIMLab-hfut/BatteryLens/assets/72554304/176e6b93-3095-441f-8b45-34bc56df67c5)| ![image](https://github.com/VIMLab-hfut/BatteryLens/assets/72554304/199535f6-ba30-4178-b8c7-b4802726e33f) | ![image](https://github.com/VIMLab-hfut/BatteryLens/assets/72554304/5dd42ed7-35fa-4aa1-b488-b8ade01388a6) |
 | ------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------- |
 |                                                   |                                                   |                                                   |
 
@@ -72,7 +72,7 @@ This view primarily consists of four subviews. Each point in the scatter plot at
 
 ## **E.** **Single Battery in Multi-Cycles View**
 
-![img](D:\WebStrom Coding\课件\clip_image014.jpg)
+![image](https://github.com/VIMLab-hfut/BatteryLens/assets/72554304/9e131709-6776-400e-b9e8-824466bcd46f)
 
 At the top of this view, there is an interactive panel when users input different battery numbers, the corresponding data changes will be displayed below. Selecting different regions will also show the corresponding data changes. This view consists of two layers, representing the voltage and temperature profiles respectively. Each layer is divided into the margin regions on the left and right sides and the main region in the middle. In the main region, to facilitate users in identifying the corresponding cycle period for each line segment, the current cycle number is labeled above each line segment. In the margin regions, we depict five sets of box plot to describe the data states before and after several cycles in the main view. The margin regions and the middle region share the same y-axis.
 
@@ -82,7 +82,7 @@ At the top of this view, there is an interactive panel when users input differen
 
 
 
-![img](D:\WebStrom Coding\课件\clip_image016.jpg)
+![image](https://github.com/VIMLab-hfut/BatteryLens/assets/72554304/11181940-71b6-4fb4-8230-005adade08e5)
 
 Each small rectangle represents a battery in some cycle. The entire matrix uses the battery numbers as the horizontal axis and the cycle count as the vertical axis. The color of each small rectangle ranges from dark to light, representing the status of the batteries.
 
@@ -92,7 +92,7 @@ Each small rectangle represents a battery in some cycle. The entire matrix uses 
 
 In this area, basic data of electric vehicles is displayed, such as vehicle name, ID, number of battery packs, and vehicle mode. It also includes information about the start time of the current cycle, selected cycle, vehicle status, and charging status. A range selector is used to choose the data range to display. The start time and end time of the current cycle are added on both sides of the selector, and the selected time range for observing data is labeled above it.
 
-![img](D:\WebStrom Coding\课件\clip_image018.jpg)
+![image](https://github.com/VIMLab-hfut/BatteryLens/assets/72554304/7cc0bc4f-b3d7-4827-a7cd-565adad4507e)
 
 
 
@@ -100,4 +100,4 @@ In this area, basic data of electric vehicles is displayed, such as vehicle name
 
 All the batteries within the selected cycle are arranged in this view. The background color of each probe (battery) title represents the performance status of the batteries near the probe. By default, each information box displays three rows of data: average temperature, highest temperature, and lowest temperature detected by the probe. Users can switch to displaying average voltage, highest voltage, and lowest voltage of the batteries by using the buttons on the right side. 
 
-![img](D:\WebStrom Coding\课件\clip_image020.jpg)
+![image](https://github.com/VIMLab-hfut/BatteryLens/assets/72554304/1ed95294-ffdb-4d17-866b-03110eb2b96c)
