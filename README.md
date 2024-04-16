@@ -22,7 +22,7 @@ How to investigate the cause of anomalies: ① Examine the specific distribution
 
  
 
-![image-20240416233802497](\pic\image-20240416233802497.png)
+![image-20240416233802497](./pic/image-20240416233802497.png)
 
 
 
