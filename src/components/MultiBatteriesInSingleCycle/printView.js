@@ -2,6 +2,7 @@ import * as d3 from "d3"
 import {tempList} from '@/plugins/axiosInstance'
 import {selectedBatteryStore} from "@/store/selectedBatteryStore";
 import {batteryListStore} from "@/store/batteryListStore";
+import {mainColor, bgColor} from "@/assets/colorUtils";
 
 // 因为温度探针只有34个，而电池（可检测电压）总数有95个，故只展示34个电池的数据
 let batteryLen;
@@ -142,9 +143,6 @@ export const dotView = (singleCycle, currTempBtn, currVoltBtn) => {
         })
     }
         const currData = res[singleCycle - 1]
-
-
-
         const strTempArr = []
         const strVoltArr = []
         let currDotArr = []
@@ -219,7 +217,7 @@ export const dotView = (singleCycle, currTempBtn, currVoltBtn) => {
 
         const color = d3.scaleLinear()
             .domain(d3.extent(statusList))
-            .range(['#4f9a95', '#df4343'])
+            .range([mainColor.green, mainColor.pink])
         return color(num)
     }
 
@@ -507,11 +505,11 @@ export const violinSetView = (type, cycle) => {
         let newArr = []
         const {voltArr, tempArr} = getArr(res, cycle)
         if(type === 'volt'){
-            color = '#afa8a5'
+            color = mainColor.brown
 
             newArr = voltArr
         }else {
-            color = '#5a99c5'
+            color = mainColor.blue
             newArr = tempArr
         }
 
@@ -651,14 +649,14 @@ export const lineView = (cycle, battery) => {
         svg.append("path")
             .datum(tempArr)
             .attr('d', d => lineTemp(d))
-            .attr('stroke', '#4f9a95')
+            .attr('stroke', mainColor.green)
             .attr('stroke-width', 2)
             .attr('fill', 'none')
 
         svg.append("path")
             .datum(voltArr)
             .attr('d', d => lineVolt(d))
-            .attr('stroke', '#bf7105')
+            .attr('stroke', mainColor.yellow)
             .attr('stroke-width', 2)
             .attr('fill', 'none')
 

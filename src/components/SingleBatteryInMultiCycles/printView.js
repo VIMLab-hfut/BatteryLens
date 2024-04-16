@@ -1,4 +1,5 @@
 import * as d3 from 'd3'
+import {mainColor} from "@/assets/colorUtils";
 
 export const printView = (type, selectedData, middleLeft , middleRight, selectedBattery = 1) => {
     const leftBox = d3.select('#left-box-' + type)
@@ -222,9 +223,9 @@ export const printView = (type, selectedData, middleLeft , middleRight, selected
     }
 
 
-    const lineColor = () => type === 't' ? '#31658c' : '#df4343'
-    const rectColor = () => type === 't' ? '#4f9a95' : '#bf7105'
-    const aveLineColor = () => type === 't' ? '#55453f' : '#b29ed8'
+    const lineColor = () => type === 't' ? mainColor.green : mainColor.yellow
+    const rectColor = () => type === 't' ? mainColor.green : mainColor.yellow
+    const aveLineColor = () => type === 't' ? mainColor.blue : mainColor.pink
     const AxisColor = '#31658c'
     const horizontalLineColor = '#ebbd62'
     const name = () => type === 't' ? 'temp' : 'volt'
@@ -291,6 +292,7 @@ export const printView = (type, selectedData, middleLeft , middleRight, selected
         const rightBoxSingleRange = Math.floor((batteryData.length - lineRangeEnd) / 5)
 
         // 左右两边箱线图的5次循环
+    console.log("lineRangeInit:", lineRangeInit)
         for (let i = 0; i < 5; i++) {
             leftBoxDomain.unshift([lineRangeInit - (i + 1) * leftBoxSingleRange, lineRangeInit - i *
             leftBoxSingleRange - 1
@@ -310,8 +312,8 @@ export const printView = (type, selectedData, middleLeft , middleRight, selected
     const noneDisplayPadding = Math.floor(lineRangeForCycleId.length / 10) + 1 // 隐藏坐标轴标签的间隔
 
         lineMinForCycleId = parseInt(batteryData[leftBoxDomain[0][0]]['number_of_cycles'])
-        lineMaxForCycleId = parseInt(batteryData[rightBoxDomain[4][1] - 1   ]['number_of_cycles'])
-
+        lineMaxForCycleId = parseInt(batteryData[rightBoxDomain[4][1] - 1]['number_of_cycles'])
+        console.log("leftBoxDomain:", leftBoxDomain)
         let tempLst = []
         batteryData.forEach((v, i) => {
             tempLst.push(v[`battery_${selectedBattery}_${name()}`])
@@ -352,6 +354,8 @@ export const printView = (type, selectedData, middleLeft , middleRight, selected
             .range([margin, boxWidth - margin])
             .padding(0.6)
 
+
+    // max 和 min写反了
         const scaleY = d3.scaleLinear()
             .domain([max, min])
             .range([height, 0])
@@ -370,7 +374,7 @@ export const printView = (type, selectedData, middleLeft , middleRight, selected
 
         const linePath = d3.line()
             .x((d, i) => xScaleLine(i))
-            .y(d => scaleY(+d))
+            .y(d => scaleY(d))
             .curve(d3.curveCardinal)
 
         svgMiddle.append("path")
@@ -460,7 +464,7 @@ export const printView = (type, selectedData, middleLeft , middleRight, selected
 
         //分隔的虚线
         printDivider(svgMiddle, xScaleLine, height, middleRange)
-
+        console.log("lineRangeForCycleId:", lineRangeForCycleId)
         return {
             lineMaxForCycleId,
             lineMinForCycleId,

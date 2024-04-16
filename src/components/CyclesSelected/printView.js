@@ -1,7 +1,9 @@
 import * as d3 from "d3";
 import {selectedCyclesStore} from "@/store/selectedCyclesStore";
 import {output7} from '@/plugins/axiosInstance'
-export const printView = (leftMargin, rightMargin) => {
+import {mainColor, bgColor} from "@/assets/colorUtils";
+
+export const printView = (leftMargin, rightMargin, glyph) => {
     //颜色
     const color = {
         gray1: "#A6A6A6",
@@ -21,6 +23,7 @@ export const printView = (leftMargin, rightMargin) => {
     const width = 380;
     const height = 380;
     const main = d3.select('#main').attr('width', 380).attr('height', 380);
+    main.select('svg').remove()
     const svg = main.append('svg')
         .attr('width', '100%')
         .attr('height', '100%')
@@ -186,13 +189,13 @@ export const printView = (leftMargin, rightMargin) => {
                 pathArcError = d3.arc().innerRadius(150).outerRadius(155)
                 if (j === 1) {
                     svg.append('path')
-                        .attr('fill', color.pink1)
+                        .attr('fill', mainColor.pink)
                         .attr('transform', `translate(${width/2} ${height/2})`)
                         .attr('d', pathArcError(partError));
                 }
                 else {
                     svg.append('path')
-                        .attr('fill', color.pink2)
+                        .attr('fill', bgColor.pink)
                         .attr('transform', `translate(${width/2} ${height/2})`)
                         .attr('d', pathArcError(partError));
                 }
@@ -202,7 +205,7 @@ export const printView = (leftMargin, rightMargin) => {
         if (warning_data[i][0] !== "0") {
             pathArcError = d3.arc().innerRadius(155).outerRadius(160)
             svg.append('path')
-                .attr('fill', color.brown1)
+                .attr('fill', mainColor.brown)
                 .attr('transform', `translate(${width/2} ${height/2})`)
                 .attr('d', pathArcError(partError));
         }
@@ -214,7 +217,7 @@ export const printView = (leftMargin, rightMargin) => {
         .range([boundary, 150])
     const boundaryPartArc = d3.arc().innerRadius(60).outerRadius(radiusScaleSOH(130));
     svg.append('path')
-        .attr('fill', '#5a99c5')
+        .attr('fill', bgColor.blue)
         .attr("fill-opacity", 0.2)
         .attr('transform', `translate(${width/2} ${height/2})`)
         .attr('d', boundaryPartArc(circlePart));
@@ -222,24 +225,53 @@ export const printView = (leftMargin, rightMargin) => {
     //SOC范围圈
     const boundaryPartArcSOC = d3.arc().innerRadius(60).outerRadius(90);
     svg.append('path')
-        .attr('fill', color.pink2)
+        .attr('fill', bgColor.pink)
         .attr("fill-opacity", .7)
         .attr('transform', `translate(${width/2} ${height/2})`)
         .attr('d', boundaryPartArcSOC(circlePart));
 
-    //绘制SOH
     angleScale = d3.scaleLinear().domain([0, soc_data.length - 1]).range([0, 6.28])
     const curveSOH = d3.lineRadial()
         .angle((d, i) => angleScale(i))
         .radius((d, i) => radiusScaleSOH(d))
 
-    svg.append('path')
-        .datum(soh_data)
-        .attr('d', d => curveSOH(d))
-        .attr('stroke', color.green1)
-        .attr('stroke-width', 2)
-        .attr('fill', 'none')
-        .attr('transform', `translate(${width/2} ${height/2})`)
+    //绘制SOH
+    if(glyph === 0){
+        svg.append('path')
+            .datum(soh_data)
+            .attr('d', d => curveSOH(d))
+            .attr('stroke', mainColor.green)
+            .attr('stroke-width', 2)
+            .attr('fill', 'none')
+            .attr('transform', `translate(${width/2} ${height/2})`)
+    }else{
+        const arr = new Array(8).fill(1)
+        const arcData = d3.pie()(arr)
+        // 把所有数据等分成八份去平均值
+        const singleLen = parseInt(soh_data.length / 8)
+        const selectionAveArr = []
+        for(let i = 0; i < 8; i++){
+            let selectionSum = 0
+            for(let j = 0; j < singleLen; j++){
+                selectionSum += soh_data[j + i * singleLen]
+            }
+            selectionAveArr.push(selectionSum / singleLen)
+        }
+        for(var i = 0; i < 8; i++){
+            const part = {
+                'startAngle': arcData[i].startAngle,
+                'endAngle': arcData[i].endAngle
+            }
+            const pathArc = d3.arc().innerRadius(boundary)
+                .outerRadius(radiusScaleSOH(selectionAveArr[i]))
+            svg.append('path')
+                .datum(selectionAveArr)
+                .attr('stroke', 'white')
+                .attr('fill', bgColor.blue)
+                .attr('transform', `translate(${width/2} ${height/2})`)
+                .attr('d', pathArc(part))
+        }
+    }
 
     //绘制SOC
     const radiusScale = d3.scaleLinear().domain([110, 0]).range([60, boundary])
@@ -252,7 +284,7 @@ export const printView = (leftMargin, rightMargin) => {
         .attr('d', d => {
             return curveSOC(d)
         })
-        .attr('stroke', '#bf7105')
+        .attr('stroke', mainColor.yellow)
         .attr('stroke-width', 1.5)
         .attr('fill', 'none')
         .attr('transform', `translate(${width/2} ${height/2})`)

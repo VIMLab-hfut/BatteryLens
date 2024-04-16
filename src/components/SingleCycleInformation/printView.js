@@ -1,4 +1,6 @@
 import * as d3 from "d3";
+import {mainColor, bgColor} from "@/assets/colorUtils";
+
 export const singleCycle = (rectData, aveCtb) => {
     processSOC(rectData.val)
     // 因为在传数据的时候忘记传数据是对应的哪一个特征值，下面是数据对应特征编号的代码，写得非常弱智
@@ -24,7 +26,7 @@ export const singleCycle = (rectData, aveCtb) => {
         .attr('height', '230')
         .attr('viewBox', `0 0 ${width} ${height}`)
 
-    const soc_soh_color = ['#d9efed', '#4f9a95', '#93ae74', '#edf7e4'];
+    const soc_soh_color = [bgColor.green, mainColor.green, mainColor.denseGreen, bgColor.denseGreen];
     const outerRadOutside = 115
     const outerRadInside = 100
     const innerRadOutside = 95
@@ -53,10 +55,12 @@ export const singleCycle = (rectData, aveCtb) => {
     var averageValue = [];
     var averageValueAbs = [];
     var absValue = [];
-    var color1 = ['#b29ed8', '#ebbd62', '#ee9a9a', '#5a99c5', '#bcaba4', '#749f83', '#ca8622',
-        '#bda29a', '#6e7074', '#546570', '#c4ccd3'
+    var color1 = [bgColor.purple, bgColor.yellow, bgColor.pink, bgColor.blue,
+        bgColor.brown, '#749f83', '#ca8622', '#bda29a',
+        '#6e7074', '#546570', '#c4ccd3'
     ];
-    var color2 = ['#7754ba', '#bf7105', '#df4343', '#31658c', '#90756a', '#9aec8e', '#116522'];
+    var color2 = [mainColor.purple, mainColor.yellow, mainColor.pink, mainColor.blue,
+        mainColor.brown, '#9aec8e', '#116522'];
     // 保存原来的正负
     var value1 = [];
     //保存特征值对应的半径值
@@ -362,5 +366,5 @@ const processSOC = (data) => {
         .attr('width', xScale.bandwidth())
         .attr('x', (d, i) => xScale(i + 1))
         .attr('y', d => d[0] > d[1] ? yScale(d[0]) : yScale(d[1]))
-        .attr('fill', d => d[0] > d[1] ? '#5a99c5' : '#4f9a95')
+        .attr('fill', d => d[0] > d[1] ? mainColor.blue : mainColor.green)
 }

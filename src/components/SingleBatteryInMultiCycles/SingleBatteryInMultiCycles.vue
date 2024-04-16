@@ -1,5 +1,10 @@
 <template>
-    <div class="main-title" style="background-color: #31658C;">Single Battery in Multi-Cycles View</div>
+  <div class="main-title" style="width: 60%">
+    <div class="number-box">E</div>
+    <div class="title-box">
+      Single Battery in Multi-Cycles View
+    </div>
+  </div>
     <div class="container">
       <div class="function-bar">
         <div class="slider">
@@ -17,7 +22,6 @@
           <div class="single-legend" v-for="(item, index) in legends" :id="index">
             <div :style="{backgroundColor: item.color1}"></div>
             <div :style="{backgroundColor: item.color2}"></div>
-            <div :style="{backgroundColor: item.color3}"></div>
             <span>{{item.title}}</span>
           </div>
         </div>
@@ -68,6 +72,7 @@ import Tools from "@/tools";
 import {voltList, tempList} from '@/plugins/axiosInstance'
 import {reactive} from "@vue/reactivity";
 import {connectionStatusStore} from "@/store/connectionStatusStore";
+import {mainColor} from "@/assets/colorUtils";
 const connectionStore = connectionStatusStore()
 
 const selectedBattery = ref(1)
@@ -76,8 +81,8 @@ const rangeMax = ref(0)
 const rangeMin = ref(0)
 const selectedData = reactive([])
 const legends = [
-    {title: 'temperature', color1: '#31658c', color2: '#4f9a95', color3: '#55453f'},
-    {title: 'voltage', color1: '#df4343', color2: '#bf7105', color3: '#b29ed8'}]
+    {title: 'temperature', color1: mainColor.blue, color2: mainColor.green},
+    {title: 'voltage', color1: mainColor.pink, color2: mainColor.yellow}]
 
 
 const store = selectedCyclesStore()
@@ -97,6 +102,7 @@ store.$subscribe((arg, data) => {
   rangeVal.value = tempSlider.lineRangeForCycleId
   rangeMax.value = tempSlider.lineMaxForCycleId
   rangeMin.value = tempSlider.lineMinForCycleId
+  console.log("rangeMax:", rangeMax.value, rangeMin.value)
 })
 
 const changeBattery = () => {
@@ -159,6 +165,7 @@ connectionStore.$subscribe(() => {
     printView("v", dataList)
     rangeMax.value = dataList.length
     rangeMin.value = 0
+    console.log("1111:", rangeMax.value, rangeMin.value)
     rangeVal.value = [parseInt(dataList.length / 2), parseInt(dataList.length / 2) + 10]
 })
 </script>

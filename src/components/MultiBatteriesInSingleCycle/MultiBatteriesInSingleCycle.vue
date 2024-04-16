@@ -1,7 +1,12 @@
 <template>
-    <div class="main-title" style="background-color: #31658C;"> Muti-Batteries in Single Cycle View</div>
+  <div class="main-title">
+    <div class="number-box">D</div>
+    <div class="title-box" style="width: 80%">
+      Muti-Batteries in Single Cycle View
+    </div>
+  </div>
     <div class="main-container" style="width: 326px; margin: 10px 0 0 0">
-      <div class="top-container">
+      <div class="top-container border">
         <div class="grid-view">
           <div id="dotView"></div>
         </div>
@@ -9,7 +14,7 @@
           <div class="Performance">
             <div class="text">Performance</div>
             <div class="color-container">
-              <div class="color" v-for="(item, index) in colorList" :key="index" :style="{backgroundColor: item}"></div>
+              <div class="color"></div>
             </div>
             <div class="label">
               <div class="normal">normal</div>
@@ -22,8 +27,8 @@
               <div class="btn-box">
                 <div class="btn" v-for="(btn, id) in item.btnList" :key="id">
                   <el-button style="width: 80%; height: 100%; border-radius: 3px" @click="clickBtn(index, id)"
-                    :style="{backgroundColor: selectedBtn[index][id] ? '#529b97' : 'white'}">
-                    <p :style="{color: selectedBtn[index][id] ? 'white' : '#529b97'}">{{btn}}</p>
+                    :style="{backgroundColor: selectedBtn[index][id] ? '#8cbebb' : 'white'}">
+                    <p :style="{color: selectedBtn[index][id] ? 'white' : '#8cbebb'}">{{btn}}</p>
                   </el-button>
                 </div>
               </div>
@@ -57,13 +62,13 @@
           </div>
         </div>
         <div class="voltage-comparison border">
-          <div class="sub-title" style="background-color: #4f9a95">Voltage Comparison</div>
+          <div class="sub-title" style="background-color: #cbe1ec; color: #397699">Voltage Comparison</div>
             <div class="violin">
               <div id="violinSetView-volt"></div>
             </div>
         </div>
         <div class="temperature-comparison border">
-          <div class="sub-title" style="background-color: #4f9a95">Temperature Comparison</div>
+          <div class="sub-title" style="background-color: #cbe1ec; color: #397699">Temperature Comparison</div>
             <div class="violin">
               <div id="violinSetView-temp"></div>
             </div>
@@ -86,12 +91,14 @@
   import {tempList, output7, voltList} from '@/plugins/axiosInstance'
   import {selectedBatteryStore} from "@/store/selectedBatteryStore";
   import {connectionStatusStore} from "@/store/connectionStatusStore";
+  import {mainColor} from "@/assets/colorUtils";
   const connectionStore = connectionStatusStore()
 
-  const colorList = reactive(["#4f9a95", "#93ae74", "#727e7a", "#bf7105", "#df4343"])
+  const colorList = reactive(["#95c2bf", "#beceac",
+    "#f3d7a1", "#d9aa69", "#ec8e8e"])
   const settingList = reactive([{title: "xAxisTemp", btnList:["Max", "Min", "Ave"]}, {title: "yAxisVolt", btnList: ["Max", "Min"]}])
   const selectedBtn = reactive([[true, false, false, false], [true, false]])
-  const violinLegends = reactive([{title: 'Temp', color: '#4f9a95'}, {title: 'Volt', color: '#BF7105'}])
+  const violinLegends = reactive([{title: 'Temp', color: mainColor.blue}, {title: 'Volt', color: mainColor.brown}])
   const dataColumns = reactive([[{title: "Temp Max", data: "0"}, {title: "Temp Ave", data: "0"},
     {title: "Temp Min", data: "0"}],
     [{title: "Volt Max", data: "0"}, {title: "Volt Ave", data: "0"}, {title: "Volt Min", data: "0"}]])
@@ -103,10 +110,11 @@
 
     const res = output7
     for(let line of res){
-      const SOH = parseFloat(line['soh'])
-      const one = parseFloat(line['one'])
 
-      if(SOH === state.singleCycle.val.SOH && one === state.singleCycle.val.one) {
+      const two = parseFloat(line['two'])
+      const one = parseFloat(line['one'])
+      if(two === state.singleCycle.val.two && one === state.singleCycle.val.one) {
+
         cycle.value = line['number_of_cycles']
         selectedCycleStore.updateSelectedCycleNum(cycle.value)
         break
@@ -170,14 +178,13 @@
 .sub-title{
   width: 308px;
   height: 17px;
-  background-color: #90756a;
+  background-color: #b2a29b;
   text-align: center;
   line-height: 17px;
   font-size: 11px;
   font-weight: normal;
   margin: 5px auto;
   color: white;
-  border-radius: 2px;
 }
 
 .violin{
@@ -215,9 +222,9 @@
           justify-content: space-between;
 
           .color{
-            width: 19%;
+            width: 100%;
             height: 100%;
-            background-color: #4f9a95;
+            background: linear-gradient(to right, #8cbebb, #ec8e8e);
           }
         }
 

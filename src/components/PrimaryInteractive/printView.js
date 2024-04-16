@@ -1,5 +1,6 @@
 import * as d3 from "d3";
 import {singleCycleStore} from "@/store/singleCycleStore";
+import {mainColor, bgColor} from "@/assets/colorUtils";
 // 不知道为什么利用d3封装好的on函数会传错数据，利用SOH不会传错的原理，点击rect时对一下数据传rectData
 
 let rectDataList = []
@@ -41,12 +42,12 @@ const calAveCtb = (dataAll) => {
     return aveCtb
 }
 
-export const printView = (selectedData, leftMargin, rightMargin) => {
+export const printView = (selectedData, id) => {
 
     //在用户选定循环区间内贡献度平均为正的特征值标记为蓝色，做平均负贡献的特征值标记为粉色
     const colorRule = (aveCtb) => {
-        if (aveCtb > 0) return "#5a99c5"
-        else return "#ee9a9a"
+        if (aveCtb > 0) return '#7aacd0'
+        else return '#f1aeae'
     }
 
     //判断特征值放在上侧或下侧
@@ -165,7 +166,7 @@ export const printView = (selectedData, leftMargin, rightMargin) => {
     const width = 1200;
     const upperHeight = 67;
     //设置下层尺寸
-    const height = 380;
+    const height = 400;
 
     const errSvg = main.append('svg')
         .attr('id', 'errSvg')
@@ -176,7 +177,18 @@ export const printView = (selectedData, leftMargin, rightMargin) => {
         .attr('viewBox', `0 30 ${width} ${height}`)
 
     //数据处理
-    const data = selectedData
+    const data = [...selectedData]
+    if(id === 0){
+        data.map(v => {
+            v.SOH = v.prediction
+            return v
+        })
+    } else {
+        data.map(v => {
+            v.SOH = v.soh
+            return v
+        })
+    }
     wholeVariable = data
 
         // const data = switchCtb(oldData)
@@ -197,7 +209,7 @@ export const printView = (selectedData, leftMargin, rightMargin) => {
         })
 
         const newSOH = data.map(v => {
-            return +v.soh
+            return +v.SOH
         })
 
         newSOH.forEach(v => {
@@ -224,7 +236,7 @@ export const printView = (selectedData, leftMargin, rightMargin) => {
             //每一次循环针对一个特征值
             for (let item in d) {
                 if (item === "one" || item === "two" || item === "three" || item === "four" || item === "five"){
-                    const res = sideRule(d.soh, lastSOH, d[item], aveCtbAll[item], upsideLst, downsideLst)
+                    const res = sideRule(d.SOH, lastSOH, d[item], aveCtbAll[item], upsideLst, downsideLst)
                     upsideLst = res.upsideLst
                     downsideLst = res.downsideLst
                 }
@@ -336,7 +348,7 @@ export const printView = (selectedData, leftMargin, rightMargin) => {
                 .attr("x2", endWidth));
 
         svg.append('g').call(grid)
-    
+
         svg.append('g')
             .attr('transform', `translate(0,${height-50})`)
             .call(xAxisGenerator)
@@ -510,7 +522,7 @@ export const printView = (selectedData, leftMargin, rightMargin) => {
             .curve(d3.curveStepAfter)
         const lastY = Y[Y.length - 1]
         Y.push(lastY)
-        g.append('path').attr('stroke', 'black').attr('fill', 'none')
+        g.append('path').attr('stroke', '#444444').attr('fill', 'none')
             .attr('d', pathLine(Y)) //由于曲线绘画的特性，所以把曲线输入数组末尾再加上一个相同的数据
         //绘制错误视图，可以容纳五个错误
         const interval = upperHeight / 7
@@ -546,11 +558,11 @@ export const printView = (selectedData, leftMargin, rightMargin) => {
         // }
         const errColor = (d, id) => {
             if(d !== '0'){
-                if(id === 0) return "#bf7105"
-                if(id === 1) return "#ee9a9a"
-                if(id === 2) return "#bcaba4"
-                if(id === 3) return "#b29ed8"
-                if(id === 4) return "#bf7105"
+                if(id === 0) return mainColor.brown
+                if(id === 1) return mainColor.pink
+                if(id === 2) return mainColor.yellow
+                if(id === 3) return mainColor.purple
+                if(id === 4) return bgColor.brown
             }
             else return 'none'
         }

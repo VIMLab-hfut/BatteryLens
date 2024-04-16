@@ -1,6 +1,9 @@
 <template>
   <div class="main-container-ver">
-    <div class="main-title-ver" style="background-color: #31658c;"><p>Batteries Status</p></div>
+    <div class="main-title-ver">
+      <div class="number-box-ver"><div>H</div></div>
+      <div class="title-box-ver"><div style="transform: rotate(-90deg)">Batteries Status</div></div>
+    </div>
     <div class="batteries-container" style="border: none">
       <div class="battery" v-for="(single, index) in batteries" :key="index">
         <div class="sub-title" :style="{backgroundColor: colorScale(single.status)}"><p>No.{{single.battery}}</p></div>
@@ -19,12 +22,12 @@
     <div class="btns-container">
       <el-button @click="btnChange('volt')"
                  style="height: 100%"
-                 :style="{backgroundColor: btn === 'volt' ? '#529b97' : 'white'}"
-      ><p :style="{color: btn === 'temp' ? '#529b97' : 'white'}">volt</p></el-button>
+                 :style="{backgroundColor: btn === 'volt' ? mainColor.green : 'white'}"
+      ><p :style="{color: btn === 'temp' ? mainColor.green : 'white'}">volt</p></el-button>
       <el-button @click="btnChange('temp')"
                  style="height: 100%"
-                 :style="{backgroundColor: btn === 'temp' ? '#529b97' : 'white'}"
-      ><p :style="{color: btn === 'volt' ? '#529b97' : 'white'}">temp</p></el-button>
+                 :style="{backgroundColor: btn === 'temp' ? mainColor.green : 'white'}"
+      ><p :style="{color: btn === 'volt' ? mainColor.green : 'white'}">temp</p></el-button>
     </div>
   </div>
 </template>
@@ -37,6 +40,7 @@ import {voltList} from '@/plugins/axiosInstance'
 import {tempList} from '@/plugins/axiosInstance'
 import {onMounted} from "vue";
 import {connectionStatusStore} from "@/store/connectionStatusStore";
+import {mainColor} from "@/assets/colorUtils";
 const connectionStore = connectionStatusStore()
 
 
@@ -114,7 +118,7 @@ const dealData = (currSelected) => {
 const colorScale = (num) => {
   const color = d3.scaleLinear()
       .domain(d3.extent(statusList))
-      .range(['#4f9a95', '#df4343'])
+      .range([mainColor.green, mainColor.pink])
   return color(num)
 }
 
@@ -138,14 +142,34 @@ position: relative;
 }
 .main-title-ver {
   height: 187px;
-  width: 23px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  border-radius: 2px;
+  width: 34px;
+  //display: flex;
+  //justify-content: center;
+  //align-items: center;
+  //font-size: 12px;
+  margin-left: -5px;
+  margin-top: -20px;
+  .number-box-ver {
+    width: 100%;
+    height: 20%;
+    background-color: #808080;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 16px;
+  }
+  .title-box-ver{
+    width: 100%;
+    height: 91%;
+    background-color: #cbe1ec;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #397699;
+    font-size: 16px;
+    white-space: nowrap;
+  }
 
   p{
     transform:rotate(270deg);
@@ -188,7 +212,7 @@ position: relative;
       p{
         transform: rotate(270deg);
         white-space: nowrap;
-        font-size: 5px;
+        font-size: 10px;
       }
     }
 
@@ -203,7 +227,7 @@ position: relative;
         height: 15px;
         width: 60px;
         line-height: 15px;
-        font-size: 8px;
+        font-size: 10px;
       }
     }
   }

@@ -1,12 +1,15 @@
 <template>
-    <div class="main-title" style="background-color: #31658C; justify-content: space-around">
+  <div class="main-title">
+    <div class="number-box">G</div>
+    <div class="title-box" style="display: flex;justify-content: space-around;width: 70%">
       <p style="margin-left: 20px">Raw Data</p>
       <p style="margin-right: 20px">Cycle No.{{selectedCycle}}</p>
     </div>
+  </div>
     <div class="container">
       <div class="top-container">
         <div class="info-container border">
-          <div class="sub-title" style="background-color: #4f9a95">Car Info.</div>
+          <div class="sub-title">Car Info.</div>
           <div class="info">
             <div class="pic">
               <img src="../../assets/electric-car-g987221023_1920.jpg" alt="">
@@ -44,7 +47,7 @@
         </div>
       </div>
       <div class="bottom-container border">
-        <div class="sub-title" style="background-color: #4f9a95">Range Status</div>
+        <div class="sub-title" style="background-color: #cbe1ec; color: #397699">Range Status</div>
         <div class="legends">
           <div class="single-legend" v-for="(item, idx) in legends" :key="idx">
             <div class="color" :style="{backgroundColor: item.color}"></div>
@@ -67,6 +70,7 @@
   import {onMounted} from "vue";
   import {competition, output7} from '@/plugins/axiosInstance'
   import {connectionStatusStore} from "@/store/connectionStatusStore";
+  import {mainColor} from "@/assets/colorUtils";
   const connectionStore = connectionStatusStore()
 
   // 注意这里写死了100
@@ -91,13 +95,16 @@
   const vehicleStatus = reactive([{title: 'time', data: '2019/3/15'}, {title: 'curr_cycle', data: '1'},
     {title: 'vehicle_state', data: '1'}, {title: 'charging_state', data: '3'}])
 
-  const legends = reactive([{color: '#bf7105', text: 'Total Volt'}, {color: '#4f9a95', text: 'Total Temp'}, {color: '#df4343', text: 'speed'}, {color: '#93ae74', text: 'mileage'}])
+  const legends = reactive([{color: mainColor.brown, text: 'Total Volt'},
+    {color: mainColor.blue, text: 'Total Temp'},
+    {color: mainColor.pink, text: 'speed'},
+    {color: mainColor.denseGreen, text: 'mileage'}])
 
   const cyclesStore = selectedCycleNumStore()
   const selectedCycle = ref(1) // 当前选中的循环
 
   cyclesStore.$subscribe((arg, state) => {
-    vehicleStatus[1].data = state.selectedCycleNum - 1
+    vehicleStatus[1].data = state.selectedCycleNum
     selectedCycle.value = state.selectedCycleNum
       lineView(selectedCycle.value, rangeVal.value)
     getOriginList(selectedCycle.value)
@@ -137,13 +144,13 @@
   .sub-title{
     width: 100%;
     height: 17px;
-    background-color: #90756a;
+    background-color: #d7cdc8;
     text-align: center;
     line-height: 17px;
     font-size: 11px;
     font-weight: normal;
-    color: white;
-    border-radius: 2px;
+    color: #8f827c;
+    //border-radius: 2px;
   }
 
   .border{

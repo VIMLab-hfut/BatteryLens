@@ -6,6 +6,7 @@ import {
     voltList,
     output7
 } from '@/plugins/axiosInstance'
+import {mainColor} from "@/assets/colorUtils";
 
 export const lineView = (selectedCycle, e) => {
     // slide的input事件会在还没有读取到json的时候触发，判断一下是否已经读完json
@@ -145,7 +146,7 @@ export const lineView = (selectedCycle, e) => {
         svg.append("path")
             .datum(currData)
             .attr('d', d => lineTemp(d.currTempArr))
-            .attr('stroke', '#4f9a95')
+            .attr('stroke', mainColor.green)
             .attr('stroke-width', 2)
             .attr('fill', 'none')
 
@@ -158,7 +159,7 @@ export const lineView = (selectedCycle, e) => {
         .attr('cx', (d, i) => xScale(i))
         .attr('cy', (d) => yScaleLeft(d))
         .attr('r', d => 2)
-        .attr('stroke', '#4f9a95')
+        .attr('stroke', mainColor.green)
         .on("mousemove", ({
                               clientX,
                               clientY
@@ -177,7 +178,7 @@ export const lineView = (selectedCycle, e) => {
     svg.append("path")
         .datum(currData)
         .attr('d', d => lineVolt(d.currVoltArr))
-        .attr('stroke', '#bf7105')
+        .attr('stroke', mainColor.brown)
         .attr('stroke-width', 2)
         .attr('fill', 'none')
 
@@ -190,7 +191,7 @@ export const lineView = (selectedCycle, e) => {
         .attr('cx', (d, i) => xScale(i))
         .attr('cy', (d) => yScaleRight(d))
         .attr('r', d => 2)
-        .attr('stroke', '#bf7105')
+        .attr('stroke', mainColor.brown)
         .on("mousemove", ({
                               clientX,
                               clientY
@@ -210,7 +211,7 @@ export const lineView = (selectedCycle, e) => {
     svg.append("path")
         .datum(currData)
         .attr('d', d => lineSpeed(d.currSpeedArr))
-        .attr('stroke', '#df4343')
+        .attr('stroke', mainColor.pink)
         .attr('stroke-width', 1)
         .attr('fill', 'none')
 
@@ -223,7 +224,7 @@ export const lineView = (selectedCycle, e) => {
         .attr('cx', (d, i) => xScale(i))
         .attr('cy', (d) => yScaleSpeed(d))
         .attr('r', d => 2)
-        .attr('stroke', '#df4343')
+        .attr('stroke', mainColor.pink)
         .on("mousemove", ({
                               clientX,
                               clientY
@@ -243,7 +244,7 @@ export const lineView = (selectedCycle, e) => {
     svg.append("path")
         .datum(currData)
         .attr('d', d => lineMileage(d.currMileageArr))
-        .attr('stroke', '#93ae74')
+        .attr('stroke', mainColor.denseGreen)
         .attr('stroke-width', 1)
         .attr('fill', 'none')
 
@@ -256,7 +257,7 @@ export const lineView = (selectedCycle, e) => {
         .attr('cx', (d, i) => xScale(i))
         .attr('cy', (d) => yScaleMileage(d))
         .attr('r', d => 2)
-        .attr('stroke', '#93ae74')
+        .attr('stroke', mainColor.denseGreen)
         .on("mousemove", ({
                               clientX,
                               clientY

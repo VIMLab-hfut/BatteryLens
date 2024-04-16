@@ -2,6 +2,7 @@ import * as d3 from 'd3'
 import {tempList} from '@/plugins/axiosInstance'
 // import {voltList} from '@/plugins/axiosInstance'
 import {batteryListStore} from "@/store/batteryListStore";
+import {mainColor} from "@/assets/colorUtils";
 const dealData = (list) => {
     // 第一遍读取数据，得到每一次循环所有电池的数据（平均值）
     const cycleLen = list[0].length
@@ -103,7 +104,7 @@ export const heatView = () => {
 
     const colorScaleVolt = d3.scaleLinear()
             .domain([0, voltMaxStatus])
-            .range(['#4f9a95', 'rgba(79,154,149,0)'])
+            .range([mainColor.green, 'rgba(79,154,149,0)'])
 
         svg.selectAll('g')
             .data(voltArr)

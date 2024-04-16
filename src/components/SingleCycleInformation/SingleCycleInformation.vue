@@ -1,12 +1,15 @@
 <template>
   <div class="container">
-    <div class="main-title" style="background-color: #4f9a95; justify-content: space-around">
-      <div>Single Cycle Information</div>
-      <div>Cycle No.{{selectedCycle}}</div>
+    <div class="main-title" >
+      <div class="number-box">C</div>
+      <div class="title-box" style="justify-content: space-around; width: 70%" >
+        <div>Single Cycle Information</div>
+        <div>Cycle No.{{selectedCycle}}</div>
+      </div>
     </div>
 
     <div class="all-batteries-status sub-container">
-      <div class="main-title sub-title" style="background-color: #31658C">All Batteries Status</div>
+      <div class="sub-title" style="background-color: #cbe1ec; color: #397699">All Batteries Status</div>
       <div class="detail-info">
         <div class="title-text">
           <div class="title" v-for="(item, index) in batteriesTitles" :key="index">{{item}}:</div>
@@ -18,7 +21,8 @@
     </div>
 
     <div class="charging-status sub-container">
-      <div class="main-title sub-title" :style="{backgroundColor: isCharging ? '#BF7105' : '#93AE74'}">{{isCharging ? "Charging Status" : "Discharging Status"}}</div>
+      <div class="sub-title" :style="{backgroundColor: isCharging ? '#d7cdc8' : '#e8f5f4',
+                                      color: isCharging ? '#8f827c' : '#8cbebb'}">{{isCharging ? "Charging Status" : "Discharging Status"}}</div>
       <div class="detail-info">
         <div class="title-text">
           <div class="title" v-for="(item, index) in chargingTitles" :key="index">{{item}}:</div>
@@ -30,7 +34,7 @@
     </div>
 
     <div class="warning sub-container">
-      <div class="main-title sub-title" style="background-color: #DF4343">WARNING</div>
+      <div class="sub-title" style="background-color: #f5c2c2; color: #DF4343">WARNING</div>
       <div class="detail-info">
         <div class="title-text">
           <div class="title" style="font-weight: bold" v-for="(item, index) in warningTitles" :key="index">{{item}}:</div>
@@ -42,7 +46,7 @@
     </div>
 
     <div class="promotion-overView">
-      <div id="single-cycle"></div>
+      <div id="single-cycle" style="margin-top: 3px"></div>
     </div>
 
     <div class="charging-overView">
@@ -73,7 +77,7 @@
 <script setup>
 import {reactive} from "@vue/reactivity";
 import {onMounted, ref} from "vue";
-import {color} from '../../assets/colorUtils'
+import {mainColor, bgColor} from '../../assets/colorUtils'
 import {singleCycle} from "@/components/SingleCycleInformation/printView";
 import {singleCycleStore} from "@/store/singleCycleStore";
 import {selectedCycleNumStore} from "@/store/selectedCycleNumStore";
@@ -90,17 +94,17 @@ const chargingData = reactive(['unknown', 'unknown', 'unknown'])
 const warningTitles = reactive(["error_code"])
 const warningData = reactive(["0"])
 const leftLegends = reactive([
-  {color: '#b29ed8', text: "Ma_T"},
-  {color: '#ebbd62', text: "Mi_T"},
-  {color: '#ee9a9a', text: "Ama_T"},
+  {color: mainColor.purple, text: "Ma_T"},
+  {color: mainColor.yellow, text: "Mi_T"},
+  {color: mainColor.pink, text: "Ama_T"},
 ])
 const middleLegend = reactive(
-  {color: '#bcaba4', text: "Amili"}
+  {color: mainColor.brown, text: "Amili"}
 )
 const rightLegends = reactive([
-  {color: '#5a99c5', text: "Asoc"},
-  {color: '#4f9a95', text: "SOH"},
-  {color: '#93ae74', text: "SOC"}
+  {color: mainColor.blue, text: "Asoc"},
+  {color: mainColor.green, text: "SOC"},
+  {color: mainColor.denseGreen, text: "SOH"}
 ])
 
 const useStore = singleCycleStore()
@@ -121,6 +125,9 @@ selectedCycleNum.$subscribe((arg, state) => {
   batteriesData[3] = tempData.ave.toFixed(2)+'℃'
   batteriesData[4] = tempData.high.toFixed(2)+'℃'
   batteriesData[5] = tempData.low.toFixed(2)+'℃'
+  // batteriesData[3] = '42.00'+'℃'
+  // batteriesData[4] = '48.34'+'℃'
+  // batteriesData[5] = '36.02'+'℃'
   getErr(output7, selectedCycle.value - 1)
 })
 
@@ -196,6 +203,10 @@ connectionStore.$subscribe(() => {
 .sub-title {
   height: 22px;
   font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white
 }
 .sub-container{
   width: 230px;
@@ -273,7 +284,7 @@ connectionStore.$subscribe(() => {
   .legends {
     width: 250px;
     height: 48px;
-    margin-top: 380px;
+    margin-top: 390px;
     display: flex;
     justify-content: space-between;
 

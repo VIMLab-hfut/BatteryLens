@@ -1,11 +1,16 @@
 <template>
-    <div class="main-title" style="background-color: #31658c;">Multi-Batteries & Multi-Cycles Matrix</div>
+  <div class="main-title">
+    <div class="number-box">F</div>
+    <div class="title-box" style="width: 70%">
+      Multi-Batteries & Multi-Cycles Matrix
+    </div>
+  </div>
     <div class="container">
       <div class="performance-line">
-        <p>performance</p>
+        <p>SOH</p>
         <img src="../../assets/MM_Axis.png" alt="">
         <div class="performance">
-          <div class="color" v-for="(item, index) in colorList" :key="index" :style="{backgroundColor: item}"></div>
+          <div class="color" ></div>
         </div>
       </div>
       <div class="view-container">
@@ -65,9 +70,9 @@
         justify-content: space-between;
 
         .color{
-          width: 19%;
+          width: 100%;
           height: 100%;
-          background-color: #4f9a95;
+          background: linear-gradient(to right, #8cbebb, white);
         }
       }
     }
