@@ -2,7 +2,7 @@
 
 ## Brief Introduction
 
-You can watch the demo Vedio on BILIBILI(https://www.bilibili.com/video/BV1wH4y1N7ob/?vd_source=ac87d7ae28f6f07eef275c93fb3f1cc9), or download the three pieces of vedio from github.
+You can watch the demo Video on BILIBILI(https://www.bilibili.com/video/BV1wH4y1N7ob/?vd_source=ac87d7ae28f6f07eef275c93fb3f1cc9), or download the three pieces of video from github.
 
 The system focuses on the practical application scenarios of batteries, aiming to identify external factors that cause battery anomalies rather than repairing of direct damage causes. Many unexpected influences occur in real usage, such as external temperature, user's unreasonable driving and charging habits, and possibly more. But our dataset only includes these few items currently. We quantify these factors as features and then use the Ampere-hour integration method to estimate State of Health (SOH) and use the features as inputs to predict SOH. The purpose of the process is to use the interpretable algorithm SHAP to obtain the contribution of each feature in the results.
 
